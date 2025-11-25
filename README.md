@@ -250,7 +250,7 @@ Reviews span multiple channels (Airbnb, Booking.com, VRBO, Direct) with varied r
 
 For reference (provided in assessment):
 - **Account ID**: 61148
-- **API Key**: f94377ebbbb479490bb3ec364649168dc443dda2e4830facaf5de2e74ccc9152
+- **API Key**: **** (write a personal message to request it)
 
 The sandbox API returns no reviews, so the application falls back to mock data automatically.
 
