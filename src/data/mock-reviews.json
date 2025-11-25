@@ -1,0 +1,387 @@
+{
+  "status": "success",
+  "result": [
+    {
+      "id": 10001,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 5,
+      "publicReview": "Absolutely stunning apartment in the heart of Shoreditch! The space was immaculate, modern, and had everything we needed for our month-long stay. The host was incredibly responsive and helpful with local recommendations. Would definitely book again!",
+      "privateReview": "Guest was respectful and left the apartment in perfect condition.",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "accuracy", "rating": 9 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 9 }
+      ],
+      "submittedAt": "2024-11-15 14:30:00",
+      "guestName": "Sophie Anderson",
+      "listingName": "2B Shoreditch Heights - Modern Loft",
+      "listingId": 1001,
+      "channelName": "airbnb",
+      "reservationId": 50001
+    },
+    {
+      "id": 10002,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 4,
+      "publicReview": "Great location and comfortable bed. The apartment was clean and well-equipped. Only minor issue was some street noise at night, but overall a pleasant stay.",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 9 },
+        { "category": "communication", "rating": 10 },
+        { "category": "accuracy", "rating": 8 },
+        { "category": "location", "rating": 9 },
+        { "category": "value", "rating": 8 }
+      ],
+      "submittedAt": "2024-11-10 09:15:00",
+      "guestName": "Marcus Chen",
+      "listingName": "2B Shoreditch Heights - Modern Loft",
+      "listingId": 1001,
+      "channelName": "booking.com",
+      "reservationId": 50002
+    },
+    {
+      "id": 10003,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 5,
+      "publicReview": "Perfect Parisian experience! The apartment has a beautiful view of the city and is walking distance to amazing cafes and restaurants. The interior design is exquisite. Highly recommend for couples!",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "accuracy", "rating": 10 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 9 }
+      ],
+      "submittedAt": "2024-11-08 16:45:00",
+      "guestName": "Elena Rousseau",
+      "listingName": "Le Marais Studio - Charming Hideaway",
+      "listingId": 1002,
+      "channelName": "airbnb",
+      "reservationId": 50003
+    },
+    {
+      "id": 10004,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 3,
+      "publicReview": "The apartment itself is nice and well-located, but the check-in process was confusing and the WiFi was unreliable during my stay. The host did try to help resolve issues quickly.",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 8 },
+        { "category": "communication", "rating": 7 },
+        { "category": "accuracy", "rating": 6 },
+        { "category": "location", "rating": 9 },
+        { "category": "value", "rating": 6 }
+      ],
+      "submittedAt": "2024-10-28 11:20:00",
+      "guestName": "James Wilson",
+      "listingName": "2B Shoreditch Heights - Modern Loft",
+      "listingId": 1001,
+      "channelName": "vrbo",
+      "reservationId": 50004
+    },
+    {
+      "id": 10005,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 5,
+      "publicReview": "Magnifique! This apartment exceeded all expectations. The attention to detail in the decor, the quality of the linens, and the fully-stocked kitchen made our family vacation so comfortable. The kids loved the neighborhood.",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "accuracy", "rating": 10 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 10 }
+      ],
+      "submittedAt": "2024-10-22 18:00:00",
+      "guestName": "François Dubois",
+      "listingName": "Le Marais Studio - Charming Hideaway",
+      "listingId": 1002,
+      "channelName": "booking.com",
+      "reservationId": 50005
+    },
+    {
+      "id": 10006,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 4,
+      "publicReview": "Lovely apartment with great amenities. The location is fantastic for exploring Barcelona. Only suggestion would be to provide more towels for longer stays. Otherwise, excellent!",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 9 },
+        { "category": "communication", "rating": 9 },
+        { "category": "accuracy", "rating": 9 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 8 }
+      ],
+      "submittedAt": "2024-10-18 10:30:00",
+      "guestName": "Isabella Martinez",
+      "listingName": "Gothic Quarter Retreat - 1BR",
+      "listingId": 1003,
+      "channelName": "airbnb",
+      "reservationId": 50006
+    },
+    {
+      "id": 10007,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 5,
+      "publicReview": "Best Airbnb experience I've ever had! The apartment is stunning, the host is super helpful, and the neighborhood has everything you need. Already planning my next stay!",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "accuracy", "rating": 10 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 10 }
+      ],
+      "submittedAt": "2024-10-15 20:15:00",
+      "guestName": "David Kim",
+      "listingName": "2B Shoreditch Heights - Modern Loft",
+      "listingId": 1001,
+      "channelName": "airbnb",
+      "reservationId": 50007
+    },
+    {
+      "id": 10008,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 4,
+      "publicReview": "Charming place with authentic Parisian vibes. The spiral staircase is beautiful but challenging with luggage. Great coffee shops nearby. Would stay again.",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 9 },
+        { "category": "communication", "rating": 10 },
+        { "category": "accuracy", "rating": 8 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 9 }
+      ],
+      "submittedAt": "2024-10-12 13:45:00",
+      "guestName": "Anna Kowalski",
+      "listingName": "Le Marais Studio - Charming Hideaway",
+      "listingId": 1002,
+      "channelName": "direct",
+      "reservationId": 50008
+    },
+    {
+      "id": 10009,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 2,
+      "publicReview": "The photos made the place look larger than it actually is. The bathroom was quite cramped and there were issues with hot water. Location was the only saving grace.",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 7 },
+        { "category": "communication", "rating": 6 },
+        { "category": "accuracy", "rating": 4 },
+        { "category": "location", "rating": 8 },
+        { "category": "value", "rating": 4 }
+      ],
+      "submittedAt": "2024-10-05 08:00:00",
+      "guestName": "Robert Taylor",
+      "listingName": "Gothic Quarter Retreat - 1BR",
+      "listingId": 1003,
+      "channelName": "booking.com",
+      "reservationId": 50009
+    },
+    {
+      "id": 10010,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 5,
+      "publicReview": "Outstanding property! We stayed for two weeks and felt right at home. The kitchen was well-equipped for cooking, and the bed was incredibly comfortable. Top-notch experience.",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "accuracy", "rating": 10 },
+        { "category": "location", "rating": 9 },
+        { "category": "value", "rating": 10 }
+      ],
+      "submittedAt": "2024-09-30 15:30:00",
+      "guestName": "Michael O'Brien",
+      "listingName": "2B Shoreditch Heights - Modern Loft",
+      "listingId": 1001,
+      "channelName": "airbnb",
+      "reservationId": 50010
+    },
+    {
+      "id": 10011,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 4,
+      "publicReview": "Really enjoyed our stay in this Berlin gem. The minimalist design is beautiful, and the neighborhood has great nightlife. Some noise from the street on weekends but expected for the area.",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 9 },
+        { "category": "communication", "rating": 9 },
+        { "category": "accuracy", "rating": 9 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 9 }
+      ],
+      "submittedAt": "2024-09-25 19:00:00",
+      "guestName": "Lisa Schmidt",
+      "listingName": "Kreuzberg Loft - Industrial Chic",
+      "listingId": 1004,
+      "channelName": "airbnb",
+      "reservationId": 50011
+    },
+    {
+      "id": 10012,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 5,
+      "publicReview": "The perfect Barcelona base! Steps from the beach, great restaurants, and excellent public transport. The apartment was spotless and the host provided wonderful recommendations.",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "accuracy", "rating": 10 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 9 }
+      ],
+      "submittedAt": "2024-09-20 12:15:00",
+      "guestName": "Emma Thompson",
+      "listingName": "Gothic Quarter Retreat - 1BR",
+      "listingId": 1003,
+      "channelName": "vrbo",
+      "reservationId": 50012
+    },
+    {
+      "id": 10013,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 4,
+      "publicReview": "Clean, modern, and centrally located. Everything worked perfectly. The self check-in was seamless. Would have appreciated a coffee machine but otherwise great value.",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 9 },
+        { "category": "accuracy", "rating": 9 },
+        { "category": "location", "rating": 9 },
+        { "category": "value", "rating": 8 }
+      ],
+      "submittedAt": "2024-09-15 17:45:00",
+      "guestName": "Thomas Müller",
+      "listingName": "Kreuzberg Loft - Industrial Chic",
+      "listingId": 1004,
+      "channelName": "booking.com",
+      "reservationId": 50013
+    },
+    {
+      "id": 10014,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 5,
+      "publicReview": "Un séjour parfait! L'appartement est magnifique, propre et très bien situé. La communication avec l'hôte était excellente. Je reviendrai sans hésiter!",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "accuracy", "rating": 10 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 10 }
+      ],
+      "submittedAt": "2024-09-10 14:00:00",
+      "guestName": "Claire Fontaine",
+      "listingName": "Le Marais Studio - Charming Hideaway",
+      "listingId": 1002,
+      "channelName": "airbnb",
+      "reservationId": 50014
+    },
+    {
+      "id": 10015,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 3,
+      "publicReview": "The location is unbeatable and the design is beautiful. However, the AC struggled during the heatwave and the neighbors were quite loud. Good for short stays.",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 8 },
+        { "category": "communication", "rating": 8 },
+        { "category": "accuracy", "rating": 7 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 6 }
+      ],
+      "submittedAt": "2024-09-05 10:30:00",
+      "guestName": "Jorge Fernandez",
+      "listingName": "Gothic Quarter Retreat - 1BR",
+      "listingId": 1003,
+      "channelName": "direct",
+      "reservationId": 50015
+    },
+    {
+      "id": 10016,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 5,
+      "publicReview": "Incredible space! The high ceilings and industrial design made working from home a pleasure. Fast WiFi, quiet neighborhood (surprisingly for Berlin), and amazing local restaurants.",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "accuracy", "rating": 10 },
+        { "category": "location", "rating": 9 },
+        { "category": "value", "rating": 10 }
+      ],
+      "submittedAt": "2024-08-28 21:00:00",
+      "guestName": "Sarah Johnson",
+      "listingName": "Kreuzberg Loft - Industrial Chic",
+      "listingId": 1004,
+      "channelName": "airbnb",
+      "reservationId": 50016
+    },
+    {
+      "id": 10018,
+      "type": "guest-to-host",
+      "status": "pending",
+      "rating": 4,
+      "publicReview": "Nice apartment with good amenities. Check-in was smooth and the location is excellent for exploring the city. Minor issue with the heating but resolved quickly.",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 9 },
+        { "category": "communication", "rating": 9 },
+        { "category": "accuracy", "rating": 8 },
+        { "category": "location", "rating": 9 },
+        { "category": "value", "rating": 8 }
+      ],
+      "submittedAt": "2024-11-20 16:30:00",
+      "guestName": "Henrik Larsson",
+      "listingName": "2B Shoreditch Heights - Modern Loft",
+      "listingId": 1001,
+      "channelName": "booking.com",
+      "reservationId": 50017
+    },
+    {
+      "id": 10019,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 5,
+      "publicReview": "We had a wonderful time! The apartment is exactly as pictured, very clean and comfortable. Great for a romantic getaway. The host's local tips were invaluable.",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "accuracy", "rating": 10 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 9 }
+      ],
+      "submittedAt": "2024-08-20 11:45:00",
+      "guestName": "Chiara Romano",
+      "listingName": "Le Marais Studio - Charming Hideaway",
+      "listingId": 1002,
+      "channelName": "vrbo",
+      "reservationId": 50018
+    },
+    {
+      "id": 10020,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": 4,
+      "publicReview": "Great value for the location. The apartment is compact but well-designed. Loved the rooftop terrace access. Would book again for my next London trip.",
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 9 },
+        { "category": "communication", "rating": 10 },
+        { "category": "accuracy", "rating": 9 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 9 }
+      ],
+      "submittedAt": "2024-08-15 14:20:00",
+      "guestName": "Oliver Hughes",
+      "listingName": "2B Shoreditch Heights - Modern Loft",
+      "listingId": 1001,
+      "channelName": "direct",
+      "reservationId": 50019
+    }
+  ]
+}
+

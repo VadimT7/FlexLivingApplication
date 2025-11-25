@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'Jokker';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(5059ff53-0feb-40dc-b165-8c0dd7fb607e.otf) format('truetype');
+}
+@font-face {
+  font-family: 'Jokker';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(c385498f-34b0-4567-b3bc-84ea09f9226b.otf) format('truetype');
+}
