@@ -2,7 +2,8 @@
 
 A modern reviews management dashboard for property managers, built with Next.js 14, TypeScript, and Tailwind CSS.
 
-![Dashboard Preview](docs/dashboard-preview.png)
+<img width="1882" height="1093" alt="image" src="https://github.com/user-attachments/assets/248ffb80-31bc-4bff-8bd7-d4d2f5cc3c3d" />
+
 
 ## 🚀 Quick Start
 
