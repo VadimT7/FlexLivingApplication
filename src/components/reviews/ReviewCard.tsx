@@ -14,6 +14,7 @@ import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { StarRating } from './StarRating';
 import { ChannelBadge } from './ChannelBadge';
+import { toggleReviewApproval } from '@/lib/approval-store';
 import type { NormalizedReview } from '@/types/review';
 
 interface ReviewCardProps {
@@ -32,30 +33,14 @@ export function ReviewCard({
   compact = false,
 }: ReviewCardProps) {
   const [isApproved, setIsApproved] = useState(review.isApprovedForDisplay);
-  const [isUpdating, setIsUpdating] = useState(false);
 
-  const handleApprovalToggle = async (checked: boolean) => {
-    setIsUpdating(true);
+  const handleApprovalToggle = (checked: boolean) => {
+    // Update localStorage directly
+    toggleReviewApproval(review.id, checked);
     setIsApproved(checked);
-
-    try {
-      const response = await fetch('/api/reviews/approve', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reviewId: review.id, approved: checked }),
-      });
-
-      if (!response.ok) {
-        // Revert on error
-        setIsApproved(!checked);
-      } else {
-        onApprovalChange?.(review.id, checked);
-      }
-    } catch {
-      setIsApproved(!checked);
-    } finally {
-      setIsUpdating(false);
-    }
+    
+    // Notify parent component
+    onApprovalChange?.(review.id, checked);
   };
 
   return (
@@ -141,7 +126,6 @@ export function ReviewCard({
             <Switch
               checked={isApproved}
               onCheckedChange={handleApprovalToggle}
-              disabled={isUpdating}
               className="data-[state=checked]:bg-green-500"
             />
           </div>
@@ -150,4 +134,3 @@ export function ReviewCard({
     </Card>
   );
 }
-

@@ -1,28 +1,13 @@
 /**
  * POST /api/reviews/approve
  * 
- * Toggle the approval status of a review for public display.
- * Uses in-memory store for serverless compatibility (Vercel).
+ * This endpoint exists for API completeness but approval state
+ * is managed client-side via localStorage for this demo.
  * 
- * Request Body:
- * {
- *   reviewId: string,
- *   approved: boolean
- * }
- * 
- * Note: In a production environment, this would update a database.
- * For this assessment demo, we use an in-memory store that:
- * - Initializes from the static JSON file
- * - Persists during the serverless instance lifecycle
- * - Resets on cold starts (acceptable for demo purposes)
+ * In production, this would update a database.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { 
-  getApprovalData, 
-  setReviewApproval, 
-  getApprovedReviewIds 
-} from '@/lib/approval-store';
 
 export async function POST(request: NextRequest) {
   try {
@@ -36,24 +21,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Update approval status in memory store
-    setReviewApproval(reviewId, approved);
-
-    // Get updated count
-    const approvedIds = getApprovedReviewIds();
-
+    // In this demo, approval state is managed client-side via localStorage
+    // This endpoint acknowledges the request for API completeness
     return NextResponse.json({
       success: true,
       reviewId,
       approved,
-      totalApproved: approvedIds.length,
+      message: 'Approval state is managed client-side in this demo',
     });
 
   } catch (error) {
-    console.error('Error updating approval status:', error);
+    console.error('Error in approve endpoint:', error);
     
     return NextResponse.json(
-      { success: false, error: 'Failed to update approval status' },
+      { success: false, error: 'Request processing failed' },
       { status: 500 }
     );
   }
@@ -62,25 +43,12 @@ export async function POST(request: NextRequest) {
 /**
  * GET /api/reviews/approve
  * 
- * Get the list of all approved review IDs
+ * Returns info about approval management in this demo
  */
 export async function GET() {
-  try {
-    const data = getApprovalData();
-
-    return NextResponse.json({
-      success: true,
-      approvedReviewIds: data.approvedReviewIds,
-      totalApproved: data.approvedReviewIds.length,
-      lastUpdated: data.lastUpdated,
-    });
-
-  } catch (error) {
-    console.error('Error reading approved reviews:', error);
-    
-    return NextResponse.json(
-      { success: false, error: 'Failed to read approved reviews' },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json({
+    success: true,
+    message: 'Approval state is managed client-side via localStorage in this demo',
+    note: 'In production, this would query a database for approved review IDs',
+  });
 }
