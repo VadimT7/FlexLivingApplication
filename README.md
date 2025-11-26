@@ -2,8 +2,7 @@
 
 A modern reviews management dashboard for property managers, built with Next.js 14, TypeScript, and Tailwind CSS.
 
-<img width="1882" height="1093" alt="image" src="https://github.com/user-attachments/assets/248ffb80-31bc-4bff-8bd7-d4d2f5cc3c3d" />
-
+![Dashboard Preview](docs/dashboard-preview.png)
 
 ## 🚀 Quick Start
 
@@ -250,7 +249,7 @@ Reviews span multiple channels (Airbnb, Booking.com, VRBO, Direct) with varied r
 
 For reference (provided in assessment):
 - **Account ID**: 61148
-- **API Key**: **** (write a personal message to request it)
+- **API Key**: f94377ebbbb479490bb3ec364649168dc443dda2e4830facaf5de2e74ccc9152
 
 The sandbox API returns no reviews, so the application falls back to mock data automatically.
 

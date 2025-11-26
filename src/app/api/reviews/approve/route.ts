@@ -2,19 +2,27 @@
  * POST /api/reviews/approve
  * 
  * Toggle the approval status of a review for public display.
- * In a production environment, this would update a database.
- * For this assessment, we update the JSON file.
+ * Uses in-memory store for serverless compatibility (Vercel).
  * 
  * Request Body:
  * {
  *   reviewId: string,
  *   approved: boolean
  * }
+ * 
+ * Note: In a production environment, this would update a database.
+ * For this assessment demo, we use an in-memory store that:
+ * - Initializes from the static JSON file
+ * - Persists during the serverless instance lifecycle
+ * - Resets on cold starts (acceptable for demo purposes)
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getApprovalData, saveApprovalData } from '@/lib/approval-store';
-import type { ApprovalData } from '@/lib/approval-store';
+import { 
+  getApprovalData, 
+  setReviewApproval, 
+  getApprovedReviewIds 
+} from '@/lib/approval-store';
 
 export async function POST(request: NextRequest) {
   try {
@@ -28,31 +36,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Read current approved reviews (from cache / disk / seed)
-    const data = await getApprovalData();
+    // Update approval status in memory store
+    setReviewApproval(reviewId, approved);
 
-    // Update approval status
-    const idSet = new Set(data.approvedReviewIds);
-    
-    if (approved) {
-      idSet.add(reviewId);
-    } else {
-      idSet.delete(reviewId);
-    }
-
-    // Save updated data
-    const updatedData: ApprovalData = {
-      approvedReviewIds: Array.from(idSet),
-      lastUpdated: new Date().toISOString(),
-    };
-
-    await saveApprovalData(updatedData);
+    // Get updated count
+    const approvedIds = getApprovedReviewIds();
 
     return NextResponse.json({
       success: true,
       reviewId,
       approved,
-      totalApproved: updatedData.approvedReviewIds.length,
+      totalApproved: approvedIds.length,
     });
 
   } catch (error) {
@@ -72,7 +66,7 @@ export async function POST(request: NextRequest) {
  */
 export async function GET() {
   try {
-    const data = await getApprovalData();
+    const data = getApprovalData();
 
     return NextResponse.json({
       success: true,
@@ -90,4 +84,3 @@ export async function GET() {
     );
   }
 }
-

@@ -25,11 +25,11 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { normalizeHostawayResponse, filterReviews } from '@/lib/review-utils';
+import { getApprovedIdsSet } from '@/lib/approval-store';
 import type { HostawayApiResponse } from '@/types/review';
 
 // Import mock data for development
 import mockReviews from '@/data/mock-reviews.json';
-import { getApprovalData } from '@/lib/approval-store';
 
 // Hostaway API configuration (from assessment document)
 const HOSTAWAY_CONFIG = {
@@ -93,9 +93,8 @@ export async function GET(request: NextRequest) {
     // Fetch raw reviews from Hostaway (or mock data)
     const rawResponse = await fetchHostawayReviews();
 
-    // Create set of approved review IDs for normalization
-    const approvalData = await getApprovalData();
-    const approvedIds = new Set(approvalData.approvedReviewIds);
+    // Get approved IDs from in-memory store (works on Vercel)
+    const approvedIds = getApprovedIdsSet();
 
     // Normalize the response
     const normalizedResponse = normalizeHostawayResponse(rawResponse, approvedIds);
@@ -144,4 +143,3 @@ export async function GET(request: NextRequest) {
     );
   }
 }
-
