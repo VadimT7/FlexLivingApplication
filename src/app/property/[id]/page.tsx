@@ -1,30 +1,25 @@
+'use client';
+
 /**
  * Property Review Display Page
  * 
  * Public-facing page that displays approved reviews for a specific property.
  * Styled to match the Flex Living website design.
+ * 
+ * Uses localStorage to read approved reviews (client-side persistence for demo).
  */
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { notFound } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { StarRating } from '@/components/reviews/StarRating';
 import { ChannelBadge } from '@/components/reviews/ChannelBadge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { normalizeHostawayResponse } from '@/lib/review-utils';
-import type { HostawayApiResponse, NormalizedReview } from '@/types/review';
-
-// Import mock data directly for server-side rendering
-import mockReviews from '@/data/mock-reviews.json';
-import approvedData from '@/data/approved-reviews.json';
-
-interface PropertyPageProps {
-  params: Promise<{
-    id: string;
-  }>;
-}
+import { getApprovedIdsSet, initializeApprovals } from '@/lib/approval-store';
+import type { NormalizedReview, NormalizedReviewsResponse } from '@/types/review';
 
 // Property details (in a real app, this would come from a database)
 const propertyDetails: Record<string, {
@@ -79,31 +74,59 @@ const propertyDetails: Record<string, {
   },
 };
 
-async function getPropertyReviews(propertyId: string): Promise<NormalizedReview[]> {
-  const approvedIds = new Set(approvedData.approvedReviewIds);
-  const normalized = normalizeHostawayResponse(
-    mockReviews as HostawayApiResponse,
-    approvedIds
-  );
-
-  // Filter to only approved guest reviews for this property
-  return normalized.reviews.filter(
-    r => r.propertyId === propertyId && 
-         r.isApprovedForDisplay && 
-         r.type === 'guest'
-  );
-}
-
-export default async function PropertyPage({ params }: PropertyPageProps) {
-  const { id } = await params;
-  const property = propertyDetails[id];
+export default function PropertyPage() {
+  const params = useParams();
+  const id = params.id as string;
   
+  const [reviews, setReviews] = useState<NormalizedReview[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const property = propertyDetails[id];
+
+  // Fetch reviews and filter by approved status from localStorage
+  useEffect(() => {
+    async function loadReviews() {
+      try {
+        // Initialize localStorage with defaults if needed
+        initializeApprovals();
+
+        const response = await fetch(`/api/reviews/hostaway?propertyId=${id}&type=guest`);
+        const data: NormalizedReviewsResponse = await response.json();
+
+        if (data.success) {
+          // Get approved IDs from localStorage
+          const approvedIds = getApprovedIdsSet();
+          
+          // Filter to only approved reviews
+          const approvedReviews = data.reviews.filter(r => approvedIds.has(r.id));
+          setReviews(approvedReviews);
+        }
+      } catch (error) {
+        console.error('Error loading reviews:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    if (id) {
+      loadReviews();
+    }
+  }, [id]);
+
+  // Handle 404
   if (!property) {
-    notFound();
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#FBFAF9]">
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold text-[#323927] mb-4">Property not found</h1>
+          <Link href="/">
+            <Button>Go Home</Button>
+          </Link>
+        </div>
+      </div>
+    );
   }
 
-  const reviews = await getPropertyReviews(id);
-  
   // Calculate average rating
   const averageRating = reviews.length > 0
     ? reviews.reduce((sum, r) => sum + r.overallRating, 0) / reviews.length
@@ -248,8 +271,13 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                 )}
               </div>
 
-              {/* Reviews List */}
-              {reviews.length === 0 ? (
+              {/* Loading State */}
+              {isLoading ? (
+                <div className="text-center py-12 bg-[#F5F3EF] rounded-2xl">
+                  <div className="w-8 h-8 border-4 border-[#D4F872]/30 border-t-[#D4F872] rounded-full animate-spin mx-auto mb-4" />
+                  <p className="text-muted-foreground">Loading reviews...</p>
+                </div>
+              ) : reviews.length === 0 ? (
                 <div className="text-center py-12 bg-[#F5F3EF] rounded-2xl">
                   <svg className="w-12 h-12 mx-auto text-muted-foreground/50 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -365,9 +393,3 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
     </div>
   );
 }
-
-// Generate static params for known properties
-export function generateStaticParams() {
-  return Object.keys(propertyDetails).map((id) => ({ id }));
-}
-
