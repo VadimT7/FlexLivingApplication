@@ -43,6 +43,13 @@ async function readApprovalData(): Promise<ApprovalData> {
     };
   }
 
+  if (!approvalCache) {
+    approvalCache = {
+      approvedReviewIds: approvedSeed.approvedReviewIds ?? [],
+      lastUpdated: approvedSeed.lastUpdated ?? new Date().toISOString(),
+    };
+  }
+
   return approvalCache;
 }
 
