@@ -15,6 +15,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
+import approvedSeed from '@/data/approved-reviews.json';
 
 interface ApprovalData {
   approvedReviewIds: string[];
@@ -22,6 +23,28 @@ interface ApprovalData {
 }
 
 const APPROVED_FILE_PATH = path.join(process.cwd(), 'src/data/approved-reviews.json');
+const isReadOnlyEnv = Boolean(process.env.VERCEL);
+
+let approvalCache: ApprovalData | null = null;
+
+async function readApprovalData(): Promise<ApprovalData> {
+  if (approvalCache) {
+    return approvalCache;
+  }
+
+  try {
+    const fileContent = await fs.readFile(APPROVED_FILE_PATH, 'utf-8');
+    approvalCache = JSON.parse(fileContent);
+  } catch (error) {
+    console.warn('Falling back to seed approval data:', error);
+    approvalCache = {
+      approvedReviewIds: approvedSeed.approvedReviewIds ?? [],
+      lastUpdated: approvedSeed.lastUpdated ?? new Date().toISOString(),
+    };
+  }
+
+  return approvalCache;
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -35,9 +58,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Read current approved reviews
-    const fileContent = await fs.readFile(APPROVED_FILE_PATH, 'utf-8');
-    const data: ApprovalData = JSON.parse(fileContent);
+    // Read current approved reviews (from cache / disk / seed)
+    const data = await readApprovalData();
 
     // Update approval status
     const idSet = new Set(data.approvedReviewIds);
@@ -54,7 +76,17 @@ export async function POST(request: NextRequest) {
       lastUpdated: new Date().toISOString(),
     };
 
-    await fs.writeFile(APPROVED_FILE_PATH, JSON.stringify(updatedData, null, 2));
+    approvalCache = updatedData;
+
+    if (!isReadOnlyEnv) {
+      try {
+        await fs.writeFile(APPROVED_FILE_PATH, JSON.stringify(updatedData, null, 2));
+      } catch (writeError) {
+        console.warn('Unable to persist approval data, continuing with in-memory cache:', writeError);
+      }
+    } else {
+      console.warn('Running in read-only environment (e.g. Vercel). Skipping file write.');
+    }
 
     return NextResponse.json({
       success: true,
@@ -80,8 +112,7 @@ export async function POST(request: NextRequest) {
  */
 export async function GET() {
   try {
-    const fileContent = await fs.readFile(APPROVED_FILE_PATH, 'utf-8');
-    const data: ApprovalData = JSON.parse(fileContent);
+    const data = await readApprovalData();
 
     return NextResponse.json({
       success: true,
