@@ -29,7 +29,7 @@ import type { HostawayApiResponse } from '@/types/review';
 
 // Import mock data for development
 import mockReviews from '@/data/mock-reviews.json';
-import approvedData from '@/data/approved-reviews.json';
+import { getApprovalData } from '@/lib/approval-store';
 
 // Hostaway API configuration (from assessment document)
 const HOSTAWAY_CONFIG = {
@@ -94,7 +94,8 @@ export async function GET(request: NextRequest) {
     const rawResponse = await fetchHostawayReviews();
 
     // Create set of approved review IDs for normalization
-    const approvedIds = new Set(approvedData.approvedReviewIds);
+    const approvalData = await getApprovalData();
+    const approvedIds = new Set(approvalData.approvedReviewIds);
 
     // Normalize the response
     const normalizedResponse = normalizeHostawayResponse(rawResponse, approvedIds);
