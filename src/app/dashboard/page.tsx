@@ -18,6 +18,7 @@ import { PropertyCard } from '@/components/dashboard/PropertyCard';
 import { FilterBar } from '@/components/dashboard/FilterBar';
 import { StatsOverview } from '@/components/dashboard/StatsOverview';
 import { calculatePropertyPerformance } from '@/lib/review-utils';
+import { getApprovedIdsSet, initializeApprovals } from '@/lib/approval-store';
 import type { 
   NormalizedReview, 
   NormalizedReviewsResponse, 
@@ -39,15 +40,27 @@ export default function DashboardPage() {
   const [sort, setSort] = useState<ReviewSort>({ field: 'date', order: 'desc' });
   const [selectedPropertyId, setSelectedPropertyId] = useState<string | null>(null);
 
-  // Fetch reviews on mount
+  // Fetch reviews and apply localStorage approvals
   useEffect(() => {
     async function fetchReviews() {
       try {
+        // Initialize localStorage with defaults if needed
+        initializeApprovals();
+
         const response = await fetch('/api/reviews/hostaway');
         const data: NormalizedReviewsResponse = await response.json();
 
         if (data.success) {
-          setReviews(data.reviews);
+          // Get approved IDs from localStorage
+          const approvedIds = getApprovedIdsSet();
+          
+          // Apply approval status from localStorage
+          const reviewsWithApproval = data.reviews.map(review => ({
+            ...review,
+            isApprovedForDisplay: approvedIds.has(review.id),
+          }));
+
+          setReviews(reviewsWithApproval);
           setProperties(data.meta.properties);
           setChannels(data.meta.channels);
         } else {
@@ -114,7 +127,7 @@ export default function DashboardPage() {
     return result;
   }, [reviews, filters, sort, selectedPropertyId]);
 
-  // Handle approval change
+  // Handle approval change - update local state
   const handleApprovalChange = useCallback((reviewId: string, approved: boolean) => {
     setReviews(prev => prev.map(r => 
       r.id === reviewId ? { ...r, isApprovedForDisplay: approved } : r
@@ -293,4 +306,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-

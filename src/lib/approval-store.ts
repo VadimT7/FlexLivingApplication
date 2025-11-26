@@ -1,90 +1,104 @@
 /**
- * In-Memory Approval Store
+ * Client-Side Approval Store
  * 
- * Stores approved review IDs in memory for serverless deployments.
- * On Vercel, the filesystem is read-only, so we can't persist to JSON files.
+ * Uses localStorage to persist approved review IDs for demo purposes.
+ * This approach works on Vercel without a database.
  * 
- * This store:
- * - Initializes from the static JSON file on first access
- * - Keeps changes in memory during the serverless function lifecycle
- * - Resets to initial state on cold starts (acceptable for demo purposes)
- * 
- * In production, this would be replaced with a database (PostgreSQL, MongoDB, etc.)
+ * Usage:
+ * - Call these functions from client components only
+ * - Approvals persist in the browser's localStorage
  */
 
 import initialApprovedData from '@/data/approved-reviews.json';
 
-interface ApprovalStore {
-  approvedReviewIds: Set<string>;
-  lastUpdated: string;
-  initialized: boolean;
-}
-
-// In-memory store (persists across requests in the same serverless instance)
-const store: ApprovalStore = {
-  approvedReviewIds: new Set<string>(),
-  lastUpdated: '',
-  initialized: false,
-};
+const STORAGE_KEY = 'flexliving_approved_reviews';
 
 /**
- * Initialize the store from the static JSON file
+ * Check if we're running in the browser
  */
-function initializeStore(): void {
-  if (!store.initialized) {
-    store.approvedReviewIds = new Set(initialApprovedData.approvedReviewIds);
-    store.lastUpdated = initialApprovedData.lastUpdated;
-    store.initialized = true;
-  }
+function isBrowser(): boolean {
+  return typeof window !== 'undefined';
 }
 
 /**
- * Get all approved review IDs
+ * Get approved review IDs from localStorage (or defaults)
  */
 export function getApprovedReviewIds(): string[] {
-  initializeStore();
-  return Array.from(store.approvedReviewIds);
-}
-
-/**
- * Get the approval store data
- */
-export function getApprovalData(): { approvedReviewIds: string[]; lastUpdated: string } {
-  initializeStore();
-  return {
-    approvedReviewIds: Array.from(store.approvedReviewIds),
-    lastUpdated: store.lastUpdated,
-  };
-}
-
-/**
- * Check if a specific review is approved
- */
-export function isReviewApproved(reviewId: string): boolean {
-  initializeStore();
-  return store.approvedReviewIds.has(reviewId);
-}
-
-/**
- * Set approval status for a review
- */
-export function setReviewApproval(reviewId: string, approved: boolean): void {
-  initializeStore();
-  
-  if (approved) {
-    store.approvedReviewIds.add(reviewId);
-  } else {
-    store.approvedReviewIds.delete(reviewId);
+  if (!isBrowser()) {
+    // Server-side: return initial data
+    return initialApprovedData.approvedReviewIds;
   }
-  
-  store.lastUpdated = new Date().toISOString();
+
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const data = JSON.parse(stored);
+      return data.approvedReviewIds || [];
+    }
+  } catch (e) {
+    console.error('Error reading from localStorage:', e);
+  }
+
+  // Return initial data if nothing stored
+  return initialApprovedData.approvedReviewIds;
 }
 
 /**
- * Get a Set of approved review IDs (for normalization)
+ * Get approved IDs as a Set
  */
 export function getApprovedIdsSet(): Set<string> {
-  initializeStore();
-  return new Set(store.approvedReviewIds);
+  return new Set(getApprovedReviewIds());
 }
 
+/**
+ * Save approved review IDs to localStorage
+ */
+export function saveApprovedReviewIds(ids: string[]): void {
+  if (!isBrowser()) return;
+
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      approvedReviewIds: ids,
+      lastUpdated: new Date().toISOString(),
+    }));
+  } catch (e) {
+    console.error('Error saving to localStorage:', e);
+  }
+}
+
+/**
+ * Toggle approval status for a review
+ */
+export function toggleReviewApproval(reviewId: string, approved: boolean): string[] {
+  const currentIds = getApprovedReviewIds();
+  const idSet = new Set(currentIds);
+
+  if (approved) {
+    idSet.add(reviewId);
+  } else {
+    idSet.delete(reviewId);
+  }
+
+  const newIds = Array.from(idSet);
+  saveApprovedReviewIds(newIds);
+  return newIds;
+}
+
+/**
+ * Check if a review is approved
+ */
+export function isReviewApproved(reviewId: string): boolean {
+  return getApprovedIdsSet().has(reviewId);
+}
+
+/**
+ * Initialize localStorage with default data if empty
+ */
+export function initializeApprovals(): void {
+  if (!isBrowser()) return;
+
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (!stored) {
+    saveApprovedReviewIds(initialApprovedData.approvedReviewIds);
+  }
+}
